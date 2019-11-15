@@ -1,80 +1,116 @@
 <template>
-    <v-container
-            class="fill-height qwerty"
-            fluid
-    >
-        <v-row
-                align="center"
-                justify="center"
-        >
-            <v-col
-                    cols="12"
-                    sm="8"
-                    md="4"
-            >
-                <v-card class="elevation-12">
-                    <v-toolbar
-                            color="primary"
-                            dark
-                            flat
-                    >
-                        <v-toolbar-title>Registration form asdadasdasd</v-toolbar-title>
-                        <div class="flex-grow-1"></div>
-                    </v-toolbar>
-                    <v-card-text>
-                        <v-form ref="form"
-                                v-model="valid">
-                            <v-text-field
-                                    label="Email"
-                                    name="email"
-                                    :prepend-icon="icons.account"
-                                    type="email"
-                                    :rules="emailRules"
-                                    v-model="email"
-                            ></v-text-field>
-                            <v-text-field
-                                    :prepend-icon="icons.lock"
-                                    :append-icon="show3 ? icons.eye : icons.eyeOff"
-                                    :rules="[passwordRules.required, passwordRules.min]"
-                                    :type="show3 ? 'text' : 'password'"
-                                    name="password"
-                                    label="Password"
-                                    hint="At least 6 characters"
-                                    v-model="password"
-                                    @click:append="show3 = !show3"
-                            ></v-text-field>
-                            <v-text-field
-                                    :prepend-icon="icons.repeat"
-                                    :append-icon="show3 ? icons.eye : icons.eyeOff"
-                                    :rules="[confirmPasswordRules.required, confirmPasswordRules.equel]"
-                                    :type="show3 ? 'text' : 'password'"
-                                    name="confirm_password"
-                                    label="Password"
-                                    hint="At least 6 characters"
-                                    v-model="confirmPassword"
-                                    @click:append="show3 = !show3"
-                            ></v-text-field>
-                        </v-form>
-                    </v-card-text>
-                    <v-card-actions>
-                        <div class="flex-grow-1"></div>
-                        <v-btn color="primary"
-                               :disabled="!valid || loading"
-                               :loading="loading"
-                               @click="onSubmit">Login
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-col>
-        </v-row>
-    </v-container>
+    <div class="cnt_full">
+
+
+        <div class="cnt">
+            <div class="c_form cnt_login_form">
+                <h2 class="c_title">Registration form</h2>
+                <form class="c_form" @submit.prevent="onSubmit">
+                    <label class="input_group" :class="{error_field: $v.email.$error}">
+                        <span>Email</span>
+
+                        <input type="email" name="email" v-model="email">
+                        <span class="error_message" v-if="$v.email.$error">
+                            <template v-if="!$v.email.email">
+                                Must be a valid e-mail
+                            </template>
+                            <template v-else>
+                                This field is required
+                            </template>
+                        </span>
+                    </label>
+
+                    <label class="input_group" :class="{error_field: $v.password.$error}">
+                        <span>Password</span>
+                        <input type="password" v-model="password"/>
+                        <span class="error_message" v-if="$v.password.$error">
+                            <template v-if="!$v.password.minLength">
+                                Password must have at least {{ $v.password.$params.minLength.min }} letters.
+                            </template>
+                            <template v-else>
+                                This field is required
+                            </template>
+                        </span>
+                    </label>
+
+                    <label class="input_group" :class="{error_field: $v.repeat.$error}">
+                        <span>Password</span>
+                        <input type="password" v-model="repeat"/>
+
+
+                        <!--  <div class="error"
+                               v-if="!$v.repeatPassword.sameAsPassword">
+                              Passwords must be identical.</div>-->
+
+                        <span class="error_message" v-if="$v.repeat.$error">
+                            <template v-if="!$v.repeat.minLength">
+                                Password must have at least {{ $v.repeat.sameAsPassword }} letters.
+                            </template>
+                        </span>
+                    </label>
+
+
+                    <button type="submit" class="c_btn btn_dark">Register                    </button>
+                </form>
+
+            </div>
+
+        </div>
+        <div>
+            <!--  <div>
+                  <div>
+
+                      <div>
+                          <v-form ref="form"
+                                  v-model="valid">
+                              <v-text-field
+                                      label="Email"
+                                      name="email"
+                                      :prepend-icon="icons.account"
+                                      type="email"
+                                      :rules="emailRules"
+                                      v-model="email"
+                              ></v-text-field>
+                              <v-text-field
+                                      :prepend-icon="icons.lock"
+                                      :append-icon="show3 ? icons.eye : icons.eyeOff"
+                                      :rules="[passwordRules.required, passwordRules.min]"
+                                      :type="show3 ? 'text' : 'password'"
+                                      name="password"
+                                      label="Password"
+                                      hint="At least 6 characters"
+                                      v-model="password"
+                                      @click:append="show3 = !show3"
+                              ></v-text-field>
+                              <v-text-field
+                                      :prepend-icon="icons.repeat"
+                                      :append-icon="show3 ? icons.eye : icons.eyeOff"
+                                      :rules="[confirmPasswordRules.required, confirmPasswordRules.equel]"
+                                      :type="show3 ? 'text' : 'password'"
+                                      name="confirm_password"
+                                      label="Password"
+                                      hint="At least 6 characters"
+                                      v-model="confirmPassword"
+                                      @click:append="show3 = !show3"
+                              ></v-text-field>
+                          </v-form>
+                      </div>
+                      <v-card-actions>
+                          <div class="flex-grow-1"></div>
+                          <v-btn color="primary"
+                                 :disabled="!valid || loading"
+                                 :loading="loading"
+                                 @click="onSubmit">Login
+                          </v-btn>
+                      </v-card-actions>
+                  </div>
+              </div>-->
+        </div>
+    </div>
 </template>
 <script>
-    import {mdiAccount} from '@mdi/js'
-    import {mdiLock} from '@mdi/js'
-    import {mdiEye} from '@mdi/js'
-    import {mdiEyeOff} from '@mdi/js'
-    import {mdiRepeat} from '@mdi/js'
+    import {required, sameAs, minLength, email} from 'vuelidate/lib/validators'
+
 
     export default {
         props: {
@@ -82,37 +118,26 @@
         },
         data() {
             return {
-                drawer: null,
-                icons: {
-                    account: mdiAccount,
-                    lock: mdiLock,
-                    eye: mdiEye,
-                    eyeOff: mdiEyeOff,
-                    repeat: mdiRepeat,
-                },
-                valid: false,
-                show3: false,
                 password: '',
-                passwordRules: {
-                    required: value => !!value || 'Required.',
-                    min: v => v.length >= 6 || 'Min 6 characters',
-                    emailMatch: () => ('The email and password you entered don\'t match'),
-                },
-                confirmPassword: '',
-                confirmPasswordRules: {
-                    required: value => !!value || 'Required.',
-                    min: v => v.length >= 6 || 'Min 6 characters',
-                    emailMatch: () => ('The email and password you entered don\'t match'),
-                    equel: v => v === this.password || 'Password should match'
-                },
+                repeat: '',
                 email: '',
-                emailRules: [
-                    v => !!v || 'E-mail is required',
-                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-                ],
+                submitStatus: null
             }
 
 
+        },
+        validations: {
+            email: {
+                required,
+                email,
+            },
+            password: {
+                required,
+                minLength: minLength(6)
+            },
+            repeat: {
+                sameAsPassword: sameAs('password')
+            }
         },
         computed: {
             loading() {
@@ -121,10 +146,10 @@
         },
         methods: {
             onSubmit() {
-                if (this.$refs.form.validate()) {
-                    this.valid = !this.valid;
-                    // console.log(this.valid);
-                    // alert('valid')
+                this.$v.$touch()
+                if (this.$v.$invalid) {
+                    this.submitStatus = 'ERROR'
+                } else {
                     const user = {
                         email: this.email,
                         password: this.password
@@ -135,7 +160,8 @@
                         .then(() => {
                             this.$router.push('/')
                         })
-                        .catch(() => {})
+                        .catch(() => {
+                        })
                 }
             }
         }
@@ -143,7 +169,16 @@
 </script>
 
 <style scoped lang="scss">
-.qwerty{
-    background: #d00;
-}
+    .cnt {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cnt_login_form {
+        max-width: 420px;
+        width: 100%;
+
+    }
 </style>

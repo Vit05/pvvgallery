@@ -52,53 +52,84 @@
                 </v-card>
             </v-dialog>
         </v-row>-->
-    <div class="c_form">
-        <modal name="product-modal">
-            <h1>asas</h1>
-            <form>
-                <label class="input_group">
-                    <span>Name</span>
+    <div>
+        <modal name="product-modal"
+               height="auto"
+               :clickToClose="false"
+               class="qqq">
+            <div class="c_modal_box">
+                <h1>Buy {{this.product.title}}</h1>
+                <form @submit.prevent="onSave" class="c_form">
+                    <label class="input_group"
+                           :class="{error_field: $v.name.$error}">
+                        <span>Name</span>
+                        <input name="name"
+                               type="text"
+                               @blur="$v.name.$touch()"
+                               v-model="name">
+                        <span class="error_message" v-if="$v.name.$error">
+                            <template v-if="!$v.name.maxLength">
+                                Name must not exceed  {{ $v.name.$params.maxLength.max }} characters
+                            </template>
+                            <template v-else>
+                                This field is required
+                            </template>
+                        </span>
+                    </label>
 
-                    <input name="name"
-                           type="text"
-                           required
-                           v-model="name">
-                </label>
-                <label class="input_group">
-                    <span>Phone</span>
+                    <label class="input_group">
+                        <span>Phone (optional)</span>
 
-                    <input name="phone"
-                           type="text"
-                           v-model="phone">
-                </label>
-                <label class="input_group">
-                    <span>Email</span>
+                        <input name="phone"
+                               type="text"
+                               v-model="phone">
 
-                    <input name="email"
-                           type="email"
-                           v-model="email">
-                </label>
+                    </label>
+                    <label class="input_group"
+                           :class="{error_field: $v.email.$error}">
+                        <span>Email</span>
+
+                        <input name="email"
+                               type="email"
+                               @blur="$v.email.$touch()"
+
+                               v-model="email">
+                        <span class="error_message" v-if="$v.email.$error">
+                            <template v-if="!$v.email.email">
+                                Must be a valid e-mail
+                            </template>
+                            <template v-else>
+                                This field is required
+                            </template>
+                        </span>
+                    </label>
 
 
-                <button :disabled="localLoading"
-                        @click="onClose">Close
-                </button>
-                <button :disabled="localLoading"
-                        :loading="localLoading"
-                        @click.prevent="onSave">BUY IT
-                </button>
-            </form>
+                    <button class="c_btn btn_dark"
+                            type="button"
+                            @click="onClose">Close
+                    </button>
+                    <button class="c_btn btn_dark"
+                            type="submit">BUY IT
+                    </button>
+
+                  <!--  <p class="typo__p" v-if="submitStatus === 'OK'">Thanks for your submission!</p>
+                    <p class="typo__p" v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
+                    <p class="typo__p" v-if="submitStatus === 'PENDING'">Sending...</p>-->
+
+                </form>
+            </div>
+
         </modal>
     </div>
 </template>
 
 <script>
+   import { required, maxLength, email } from "vuelidate/lib/validators";
 
-    export default {
+   export default {
         props: ['product'],
-        components: {
-            // cModal:VModal
-        },
+        components: {     },
         data() {
             return {
                 dialog: false,
@@ -106,24 +137,40 @@
                 phone: '',
                 email: '',
                 localLoading: false,
-
+                submitStatus: null
             }
         },
+
+       validations: {
+           email: {
+               required,
+               email,
+           },
+           name: {
+               required,
+               maxLength: maxLength(10)
+           },
+       },
         methods: {
 
             onClose() {
                 this.name = ''
                 this.phone = ''
                 this.email = ''
-                this.dialog = false
+                this.$v.$reset()
+
                 this.$modal.hide('product-modal');
 
             },
 
             onSave() {
-                console.log(this.product);
-                if (this.name !== '' && this.phone !== '' && this.email !== '') {
-                    this.localLoading = true
+                this.$v.$touch()
+                if (this.$v.$invalid) {
+                    this.submitStatus = 'ERROR'
+                }
+                else {
+                    // do your submit logic here
+                    this.submitStatus = 'PENDING'
                     this.$store.dispatch('createOrder', {
                         name: this.name,
                         phone: this.phone,
@@ -137,8 +184,8 @@
                         this.localLoading = false
                         this.dialog = false
                     })
+                    this.$modal.hide('product-modal');
                 }
-                this.$modal.hide('product-modal');
 
             }
 
@@ -146,6 +193,12 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss">
+    .c_modal_box {
+        padding: 30px 20px;
+    }
 
+    .v--modal-box {
+        padding: 50px 30px;
+    }
 </style>

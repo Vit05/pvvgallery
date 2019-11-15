@@ -2,6 +2,7 @@ import Vue from 'vue'
 import './styles/common.scss';
 import App from './App.vue'
 import BuyDialogComponent from './components/ByDialogs.vue'
+import EditDialogComponent from './components/EditProduct.vue'
 import router from './router/router'
 import store from './store/store'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -9,27 +10,27 @@ import { faSpinner, faAlignLeft, faSignInAlt, faSignOutAlt, faUser, faBars } fro
 import Drawer from './components/Drawer';
 import vmodal from 'vue-js-modal'
 import Spinner from './components/Spinner.vue'
-import SimpleVueValidation from 'simple-vue-validator';
-Vue.use(SimpleVueValidation);
-
-
-
-
+import Vuelidate from 'vuelidate'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import * as fb from 'firebase/app'
+import LazyLoadDirective from "./directives/LazyLoadDirective";
 
+import * as fb from 'firebase/app'
 import "firebase/auth";
 import "firebase/firestore";
 
 library.add(faSpinner, faAlignLeft, faSignInAlt, faSignOutAlt, faUser, faBars)
-Vue.use(vmodal, { dialog: true, dynamic: true, injectModalsContainer: true,  dynamicDefaults: { clickToClose: false } })
+Vue.use(vmodal, { dialog: true, dynamic: true })
+Vue.use(Vuelidate)
+
+Vue.directive("lazyload", LazyLoadDirective);
+
 Vue.component('fai', FontAwesomeIcon)
 Vue.component('Spinner',Spinner)
 Vue.component('Drawer', Drawer);
-
-// Vue.config.productionTip = false
 Vue.component('app-buy-dialog', BuyDialogComponent)
-// Vue.config.productionTip = false
+Vue.component('app-edit-dialog', EditDialogComponent)
+
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyCddzYnhLiBHZUHzZHwq15L_pdORCbQwPk",
@@ -54,6 +55,9 @@ const firebaseConfig = {
 * */
 fb.initializeApp(firebaseConfig);
 
+export const db = fb.firestore()
+
+// console.log(db);
 
 let app;
 

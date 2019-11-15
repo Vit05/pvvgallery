@@ -1,58 +1,120 @@
 <template>
-    <div class="cnt_full">
+    <div>
         <div class="cnt" v-if="!loading && myProducts.length !== 0">
             <h1 class="c_title">Products</h1>
-            <div
-                    max-width="768"
-                    class="mx-auto mb-4"
-
-                    v-for="(product, i) in myProducts"
-                    :key="i"
-                    :to="`/product/${product.id}`"
-            >
-                <div
-                        class="py-2 pl-2"
+            <div class="c_product_list">
+                <div v-for="(product, i) in myProducts"
+                     :key="i"
+                     class="c_product"
                 >
-                    <div class="shrink">
-                        <img
-                                height="100"
-                                width="100"
-                                :src="product.imageSrc"
-                        />
-                    </div>
-
                     <div>
-                        <div>
-                            <div class="overline mb-4">{{product.title}}</div>
-                            <div class="headline mb-1">${{product.price}}</div>
-                        </div>
-                    </div>
+                        <ImageItem
+                                class="article-item__image"
+                                v-if="product.imageSrc"
+                                :source="product.imageSrc"
+                        />
 
+
+                        <div>
+                            <div class="c_subtitle">{{product.title}}</div>
+                            <div class="">${{product.price}}</div>
+                        </div>
+                        <router-link :to="`/product/${product.id}`" class="c_btn">details</router-link>
+
+                    </div>
                 </div>
             </div>
         </div>
-        <div v-else-if="!loading && myProducts.length === 0">
+
+        <div class="cnt" v-else-if="!loading && myProducts.length === 0">
             <h1 class="c_title">You haven't products yet!</h1>
         </div>
+
         <Spinner v-else/>
     </div>
 
 </template>
 
 <script>
+    import ImageItem from "../../components/ImageItem";
+
     export default {
+
+        methods: {},
         computed: {
             myProducts() {
-                // console.log(this.$store.getters.myProducts);
                 return this.$store.getters.myProducts
             },
             loading() {
                 return this.$store.getters.loading
             }
-        }
+        },
+        components: {
+            ImageItem
+        },
+       /* beforeCreate: function(){
+            console.log('beforeCreate()');
+        },
+        created: function(){
+            console.log('created()');
+
+        },
+        beforeMount: function(){
+            console.log('beforeMount()');
+        },
+        mounted: function(){
+            console.log('mounted()');
+        },
+        beforeUpdate: function(){
+            console.log('beforeUpdate()');
+        },
+        updated: function(){
+            console.log('updated()');
+        },
+        beforeDestroy: function(){
+            console.log('beforeDestroy()');
+        },
+        destroyed: function(){
+            console.log('destroyed()');
+        }*/
     }
 </script>
 
-<style scoped>
+<style lang="scss">
+    .c_product_list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
 
+        .c_product {
+            width: 30%;
+            position: relative;
+            margin-bottom: 30px;
+
+            @media screen and (max-width: 1024px) {
+                width: 50%;
+            }
+
+            &:hover {
+                .c_product_desc {
+                    visibility: visible;
+                    opacity: 1;
+                }
+
+                img {
+                    filter: grayscale(100%) brightness(50%);
+                }
+            }
+
+            .article-item__image {
+                height: 300px;
+            }
+
+            img {
+                object-fit: cover;
+                height: 300px;
+                width: 100%;
+            }
+        }
+    }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="cnt_full">
-        <div v-if="!loading" class="c_list">
+        <template v-if="!loading">
             <!-- <v-container class="lighten-10" fluid>
                  <v-row>
                      <v-carousel :show-arrows="true">
@@ -12,39 +12,27 @@
                      </v-carousel>
                  </v-row>
              </v-container>-->
+            <div class="c_list">
 
+                <ImageItem
+                        class="c_product"
+                        v-for="(item, i) in products"
+                        :key="i"
+                        :source="item.imageSrc">
+                    <div class="c_product_desc">
+                        <span v-if="item.productCreator" class="c_creator">by {{item.productCreator}}</span>
 
-            <div v-for="(item, i) in products"
-                 :key="i"
-                 class="c_product"
-            >
-                <!--                <router-link :aria-label="item.title" :id="item.id" :ownerId="item.ownerId" :to="`/product/${item.id}`">-->
-
-                <img v-if="item.imageSrc"
-                     :src="item.imageSrc"/>
-                <!--                </router-link>-->
-
-                <!--   <div>{{item.title}}</div>
-
-                   <div>Price: ${{item.price}}</div>
-
-                   {{item.description}}-->
-
-
-                <div class="c_product_desc">
-                    <router-link class="c_btn" :to="`/product/${item.id}`">More</router-link>
-                    <button class="c_btn" @click="openModal" :productId="item.id" :ownerId="item.ownerId">buy</button>
-                </div>
+                        <router-link class="c_btn" :to="`/product/${item.id}`">More</router-link>
+                        <button class="c_btn" @click="openModal" :productId="item.id" :ownerId="item.ownerId">buy
+                        </button>
+                    </div>
+                </ImageItem>
             </div>
-
-
             <app-buy-dialog :product="currentProduct" v-if="currentProduct"></app-buy-dialog>
 
-        </div>
+        </template>
         <div v-else>
-
-                <Spinner></Spinner>
-
+            <Spinner></Spinner>
         </div>
     </div>
 
@@ -53,6 +41,7 @@
 
 <script>
     // import Spinner from 'vue-simple-spinner'
+    import ImageItem from "../components/ImageItem.vue";
 
     export default {
         data() {
@@ -87,30 +76,39 @@
                 this.$modal.show('product-modal');
             }
         },
-        /*components: {
-            Spinner
+        components: {
+            ImageItem
+        },
+       /* beforeCreate: function(){
+            console.log('beforeCreate()');
+
+            },
+        created: function(){
+            console.log('created()');
+        },
+        beforeMount: function(){
+            console.log('beforeMount()');
+        },
+        mounted: function(){
+            console.log('mounted()');
+        },
+        beforeUpdate: function(){
+            console.log('beforeUpdate()');
+        },
+        updated: function(){
+            console.log('updated()');
+        },
+        beforeDestroy: function(){
+            console.log('beforeDestroy()');
+        },
+        destroyed: function(){
+            console.log('destroyed()');
         }*/
     };
 </script>
 
 
-<style scoped lang="scss">
-
-   /* .c_overlay {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 100%;
-        z-index: 2500;
-        width: 100%;
-        background-color: rgba(black, 0.5);
-
-    }*/
+<style lang="scss">
 
 
     .c_list {
@@ -123,30 +121,35 @@
             height: 40vh;
             position: relative;
 
-            @media screen and (max-width:1024px) {
+            @media screen and (max-width: 1024px) {
                 width: 50%;
             }
+
             &:hover {
                 .c_product_desc {
                     visibility: visible;
                     opacity: 1;
-
                 }
 
                 img {
-                    filter: grayscale(100%)  brightness(50%);
+                    filter: grayscale(100%) brightness(50%);
                 }
             }
 
-
             img {
-                height: 40vh;
                 object-fit: cover;
+                height: 40vh;
                 width: 100%;
-                transition: all ease-in-out .5s;
-
             }
 
+.c_creator{
+    position: absolute;
+    color: #fff;
+    left: 10px;
+    top: 10px;
+    z-index: 10;
+    font-size: 12px;
+}
             .c_product_desc {
                 padding: 30px;
                 display: flex;

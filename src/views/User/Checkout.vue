@@ -1,8 +1,8 @@
 <template>
     <div class="cnt_full">
         <div class="cnt">
-            <Spinner v-if="loading"></Spinner>
-            <div v-else-if="!loading && orders.length !==  0">
+
+            <div class="cnt" v-if="!loading && orders.length !== 0">
                 <div >
                     <div>
                         <h1 class="c_title">Orders</h1>
@@ -20,6 +20,7 @@
 
                             <div>{{order.name}}</div>
                             <div>{{order.phone}}</div>
+                            <div>{{order.email}}</div>
 
                             <router-link class="primary" :to="`/product/${order.productId}`">Open</router-link>
 
@@ -30,11 +31,11 @@
                     </div>
                 </div>
             </div>
-            <div v-else>
-
-                <h1>No orders </h1>
-
+            <div class="cnt" v-else-if="!loading && orders.length === 0">
+                <h1 class="c_title">No orders </h1>
             </div>
+
+            <Spinner v-if="loading"></Spinner>
         </div>
 
 

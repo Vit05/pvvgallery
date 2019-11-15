@@ -74,51 +74,60 @@
          </v-footer>
      </v-app>-->
 
-    <div class="wraper">
-        <div class="cnt_full c_header">
-            <div class="cnt">
-                <button v-if="isMobile" @click="openMenu">
-                    <fai icon="bars" class="icon"/>
+    <div class="wrapper">
+        <div class="c_content">
+            <div class="cnt_full c_header">
+                <div class="cnt">
+                    <button v-if="isMobile" @click="openMenu">
+                        <fai icon="bars" class="icon"/>
 
-                </button>
-                <router-link to="/" class="c_logotype">PVVGALLERY22</router-link>
-                <ul class="c_header_nav" v-if="!isMobile">
-                    <li v-for="(link, i) in links" :key="i">
+                    </button>
+                    <router-link to="/" class="c_logotype">PVVGALLERY22</router-link>
+                    <ul class="c_header_nav" v-if="!isMobile">
+                        <li v-for="(link, i) in links" :key="i">
+                            <router-link :to="link.url">{{link.title}}</router-link>
+                        </li>
+                        <li v-if="isUserLoggedIn" class="c_user">
+                            <span class="c_name">
+                                <fai icon="user" class="icon"/>{{user.email}}
+                            </span>
+                            <span @click="onLogout" class="c_logout">
+                                <fai icon="sign-out-alt" class="icon"/>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <router-view class="cnt_full cnt_view"/>
+
+            <component-error v-if="error">
+                {{error}}
+            </component-error>
+
+            <Drawer v-if="isMobile" :direction="'left'" :exist="true" ref="LeftDrawer">
+                <ul class="c_header_nav">
+                    <li v-for="(link, i) in links" :key="i" @click="openMenu">
                         <router-link :to="link.url">{{link.title}}</router-link>
                     </li>
                     <li v-if="isUserLoggedIn" class="c_user">
                             <span class="c_name">
-                                <fai icon="user" class="icon"/>{{user.email}}
+                                <fai icon="user"/>{{user.email}}
                             </span>
                         <span @click="onLogout" class="c_logout">
-                                <fai icon="sign-out-alt" class="icon"/>
+                                <fai icon="sign-out-alt"/>
                             </span>
                     </li>
                 </ul>
-            </div>
+            </Drawer>
+
         </div>
 
-        <router-view class="cnt_full cnt_view"/>
-
-        <component-error v-if="error">
-            {{error}}
-        </component-error>
-
-        <Drawer v-if="isMobile" :direction="'left'" :exist="true" ref="LeftDrawer">
-            <ul class="c_header_nav">
-                <li v-for="(link, i) in links" :key="i" @click="openMenu">
-                    <router-link :to="link.url">{{link.title}}</router-link>
-                </li>
-                <li v-if="isUserLoggedIn" class="c_user">
-                            <span class="c_name">
-                                <fai icon="user"/>{{user.email}}
-                            </span>
-                    <span @click="onLogout" class="c_logout">
-                                <fai icon="sign-out-alt"/>
-                            </span>
-                </li>
-            </ul>
-        </Drawer>
+        <footer class="cnt_full c_footer">
+            <div class="cnt">
+                <p>Design and development by V.Paleychuk</p>
+            </div>
+        </footer>
     </div>
 </template>
 

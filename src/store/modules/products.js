@@ -3,9 +3,8 @@ import "firebase/database";
 import "firebase/storage";
 
 class Product {
-    constructor(title, vendor, color, material, price, description, ownerId, imageSrc = '', promo = false, id = null) {
+    constructor(title, color, material, price, description, ownerId, imageSrc = '', promo = false, productCreator = null, id = null) {
         this.title = title
-        this.vendor = vendor
         this.color = color
         this.material = material
         this.price = price
@@ -14,6 +13,7 @@ class Product {
         this.imageSrc = imageSrc
         this.promo = promo
         this.id = id
+        this.productCreator = productCreator
     }
 }
 
@@ -38,6 +38,24 @@ export default {
             product.title = title
             product.price = price
             product.description = description
+        },
+        deleteProduct(state, id) {
+            let prds =  state.products.filter(function (obj) {
+                return obj.id !== id
+            })
+
+
+            console.log("PRDS---", prds);
+            // console.log(state.products, payload);
+            /* state.products.filter(function(ele){
+                 console.log(ele.id !== payload);
+             });*/
+            state.products = prds;
+
+            /* return state.products.filter(a => {
+                 return a.id === payload
+                // console.log(a.id)
+             })*/
         }
     },
     actions: {
@@ -48,6 +66,7 @@ export default {
             const result = []
             try {
                 const productsVal = await fb.database().ref('products').once('value')
+                console.log(productsVal.val());
                 const products = productsVal.val()
 
                 // console.log(products);
@@ -56,7 +75,6 @@ export default {
                     result.push(
                         new Product(
                             product.title,
-                            product.vendor,
                             product.color,
                             product.material,
                             product.price,
@@ -64,6 +82,7 @@ export default {
                             product.ownerId,
                             product.imageSrc,
                             product.promo,
+                            product.productCreator,
                             key
                         )
                     )
@@ -77,17 +96,16 @@ export default {
                 throw error
             }
         },
+
         async createProduct({commit}, payload) {
 
             commit('clearError')
             commit('setLoading', true)
 
             const image = payload.image
-            // console.log(image);
             try {
                 const newProduct = new Product(
                     payload.title,
-                    payload.vendor,
                     payload.color,
                     payload.material,
                     payload.price,
@@ -95,6 +113,7 @@ export default {
                     fb.auth().currentUser.uid,
                     '',
                     payload.promo,
+                    payload.productCreator
                 )
 
 
@@ -139,12 +158,32 @@ export default {
                 commit('setLoading', false)
 
             } catch (error) {
-                alert(1)
+                commit('setError', error.message)
+                commit('setLoading', false)
+                throw error
+            }
+        },
+
+        async deleteProduct({commit}, {id}) {
+            commit('clearError')
+            commit('setLoading', true)
+            try {
+                // await fb.database().ref('products').child(id).remove()
+                // var prdRef = fb.database().ref('products').child(id);
+                // const productsVal = await fb.database().ref('products').on('value')
+
+                await fb.database().ref('products').child(id).set(null)
+                commit('deleteProduct', id);
+                commit('setLoading', false)
+
+            } catch (error) {
                 commit('setError', error.message)
                 commit('setLoading', false)
                 throw error
             }
         }
+
+
     },
     getters: {
         products(state) {
@@ -153,7 +192,7 @@ export default {
         productsPromo(state) {
             return state.products.filter(product => product.promo)
         },
-        myProducts (state) {
+        myProducts(state) {
             return state.products.filter(product => {
                 return product.ownerId === fb.auth().currentUser.uid
             })

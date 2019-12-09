@@ -1,88 +1,15 @@
 <template>
-    <!-- <v-app id="inspire">
-         <v-navigation-drawer v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
-                              v-model="drawer"
-                              app>
-             <v-list dense>
-                 <v-list-item v-for="(link, i) in links" :to="link.url" :key="i">
-                     <v-list-item-content>
-                         <v-list-item-title>{{link.title}}</v-list-item-title>
-                     </v-list-item-content>
-                 </v-list-item>
-
-
-             </v-list>
-         </v-navigation-drawer>
-
-         <v-app-bar app dark class="c_header">
-             <template v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs">
-
-                 <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-             </template>
-             <v-toolbar flat color="transparent">
-                 <div>
-                     <router-link to="/" class="c_logotype">PVVGALLERY</router-link>
-
-                 </div>
-
-                 <div class="flex-grow-1"></div>
-                 <template v-if="$vuetify.breakpoint.mdAndUp">
-
-
-                     <ul class="c_header_nav">
-                         <li v-for="(link, i) in links" :key="i">
-                             <router-link :to="link.url">{{link.title}}</router-link>
-                         </li>
-                         <li v-if="isUserLoggedIn" class="c_user">
-                             <span class="c_name">
-                                 <fai icon="user"/>{{user.email}}
-                             </span>
-                             <span @click="onLogout" class="c_logout">
-                                 <fai icon="sign-out-alt"/>
-                             </span>
-                         </li>
-                     </ul>
-
-                 </template>
-             </v-toolbar>
-         </v-app-bar>
-         <template v-if="error">
-             <v-snackbar
-                     color="red"
-                     :multi-line="true"
-                     :timeout="5000"
-                     @input="closeError"
-                     :value="true"
-             >
-                 {{ error }}
-                 <v-btn
-                         dark
-                         text
-                         @click.native="closeError"
-                 >
-                     Close
-                 </v-btn>
-             </v-snackbar>
-
-         </template>
-
-         <v-content>
-             <router-view/>
-         </v-content>
-         <v-footer color="indigo" app>
-             <span class="white&#45;&#45;text">&copy; 2019</span>
-         </v-footer>
-     </v-app>-->
 
     <div class="wrapper">
         <div class="c_content">
             <div class="cnt_full c_header">
                 <div class="cnt">
-                    <button v-if="isMobile" @click="openMenu">
-                        <fai icon="bars" class="icon"/>
+
+                    <router-link to="/" class="c_logotype">PVVGALLERY22</router-link>
+                    <button class="nav_btn" v-if="isMobile" @click="openMenu">
+                        <fai icon="bars" class="icon" size="3x"/>
 
                     </button>
-                    <router-link to="/" class="c_logotype">PVVGALLERY22</router-link>
                     <ul class="c_header_nav" v-if="!isMobile">
                         <li v-for="(link, i) in links" :key="i">
                             <router-link :to="link.url">{{link.title}}</router-link>
@@ -105,7 +32,7 @@
                 {{error}}
             </component-error>
 
-            <Drawer v-if="isMobile" :direction="'left'" :exist="true" ref="LeftDrawer">
+            <Drawer v-if="isMobile" :direction="'left'" :exist="true" ref="LeftDrawer" class="c_header_mobile">
                 <ul class="c_header_nav">
                     <li v-for="(link, i) in links" :key="i" @click="openMenu">
                         <router-link :to="link.url">{{link.title}}</router-link>
@@ -212,7 +139,7 @@
     };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     @import "styles/styles/var";
 
     .c_header {
@@ -224,6 +151,14 @@
         right: 0;
         top: 0;
         z-index: 3000;
+
+        .nav_btn{
+            background-color: transparent;
+            border: 0;
+            &:focus{
+                outline: 0;
+            }
+        }
         .icon {
             path {
                 fill: white
@@ -234,6 +169,7 @@
         .cnt {
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
 
 
@@ -276,6 +212,15 @@
     }
 
     .cnt_view {
+
+    }
+
+
+    .c_header_mobile{
+        .sidebar{
+            background-color: #000;
+            color: #fff;
+        }
 
     }
 </style>

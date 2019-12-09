@@ -3,7 +3,6 @@
         <div class="cnt">
             <div class="c_form cnt_login_form">
 
-                <h2 class="c_title">Login form</h2>
                 <h2 class="c_subtitle">Login form</h2>
 
                 <form @submit.prevent="onSubmit">
@@ -82,8 +81,7 @@
                 this.$v.$touch()
                 if (this.$v.$invalid) {
                     this.submitStatus = 'ERROR'
-                }
-                else {
+                } else {
                     this.submitStatus = 'PENDING'
                     this.valid = !this.valid;
                     const user = {
@@ -115,12 +113,18 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        padding-top: 50px;
     }
 
     .cnt_login_form {
-        max-width: 420px;
+        max-width: 460px;
         width: 100%;
+        /*padding-left: 15px;*/
+        /*padding-right: 15px;*/
 
+        .c_subtitle {
+            margin-bottom: 30px;
+        }
     }
 
 

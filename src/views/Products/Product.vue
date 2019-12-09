@@ -15,10 +15,10 @@
                     <span class="c_key">Name:</span>
                     <span class="c_value">{{ product.title }}</span>
                 </p>
-               <!-- <p class="c_desc_item">
-                    <span class="c_key">Vendor:</span>
-                    <span class="c_value">{{ product.vendor }}</span>
-                </p>-->
+                <!-- <p class="c_desc_item">
+                     <span class="c_key">Vendor:</span>
+                     <span class="c_value">{{ product.vendor }}</span>
+                 </p>-->
                 <p class="c_desc_item">
                     <span class="c_key">Color:</span>
                     <span class="c_value">{{ product.color }}</span>
@@ -38,16 +38,17 @@
 
 
                 <div class="c_btn_row">
-                    <template v-if="isOwner" >
+                    <template v-if="isOwner">
                         <button class="c_btn" @click="openEditModal">edit</button>
-                        <button class="c_btn" @click="deleteProduct"
-                                style="background:brown; border-color: brown"
-                                :productId="product.id">delete</button>
+                        <button class="c_btn btn_delete" @click="deleteProduct"
+                                :productId="product.id">delete
+                        </button>
                     </template>
 
 
-
-                    <button v-if="!isOwner" class="c_btn" @click="openBuyModal" :productId="product.id" :ownerId="product.ownerId">buy</button>
+                    <button v-if="!isOwner" class="c_btn" @click="openBuyModal" :productId="product.id"
+                            :ownerId="product.ownerId">buy
+                    </button>
                 </div>
 
             </div>
@@ -97,44 +98,48 @@
             openEditModal() {
                 this.$modal.show('edit-product-modal');
             },
-            deleteProduct(){
-                this.$store.dispatch('deleteProduct', {
-                    id: this.product.id
-                }).then(() => {
-                    this.$router.push('/')
-                })
-                    .catch(() => {
+            deleteProduct() {
+                var r = confirm("You really want to delete product?");
+                if (r) {
+                    this.$store.dispatch('deleteProduct', {
+                        id: this.product.id
+                    }).then(() => {
+                        this.$router.push('/')
                     })
+                        .catch(() => {
+                        })
+                }
+
 
             }
         },
         components: {
             ImageItem,
         },
-        beforeCreate: function(){
-            console.log('beforeCreate()');
-        },
-        created: function(){
-            console.log('created()');
-        },
-        beforeMount: function(){
-            console.log('beforeMount()');
-        },
-        mounted: function(){
-            console.log('mounted()');
-        },
-        beforeUpdate: function(){
-            console.log('beforeUpdate()');
-        },
-        updated: function(){
-            console.log('updated()');
-        },
-        beforeDestroy: function(){
-            console.log('beforeDestroy()');
-        },
-        destroyed: function(){
-            console.log('destroyed()');
-        }
+        /* beforeCreate: function(){
+             console.log('beforeCreate()');
+         },
+         created: function(){
+             console.log('created()');
+         },
+         beforeMount: function(){
+             console.log('beforeMount()');
+         },
+         mounted: function(){
+             console.log('mounted()');
+         },
+         beforeUpdate: function(){
+             console.log('beforeUpdate()');
+         },
+         updated: function(){
+             console.log('updated()');
+         },
+         beforeDestroy: function(){
+             console.log('beforeDestroy()');
+         },
+         destroyed: function(){
+             console.log('destroyed()');
+         }*/
     }
 </script>
 
@@ -143,14 +148,33 @@
         display: flex;
         padding-top: 50px;
         padding-bottom: 50px;
+        @media screen and (max-width: 767px) {
+            padding: 0 0 30px;
+            flex-direction: column;
+        }
 
         .c_pic {
-            width: 50%;
+            width: 60%;
+            @media screen and (max-width: 960px) {
+                width: 50%;
+            }
+            @media screen and (max-width: 767px) {
+                width: 100%;
+            }
         }
 
         .c_description {
-            width: 50%;
+            width: 40%;
             padding-left: 50px;
+            @media screen and (max-width: 960px) {
+                width: 50%;
+            }
+            @media screen and (max-width: 767px) {
+                width: 100%;
+                padding-left: 20px;
+                padding-right: 20px;
+                padding-top: 30px;
+            }
 
             .c_desc_item {
                 width: 100%;
@@ -163,6 +187,10 @@
                 font-weight: 700;
                 display: block;
             }
+        }
+
+        .c_btn {
+            margin-right: 20px;
         }
     }
 </style>

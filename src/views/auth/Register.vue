@@ -4,7 +4,7 @@
 
         <div class="cnt">
             <div class="c_form cnt_login_form">
-                <h2 class="c_title">Registration form</h2>
+                <h2 class="c_subtitle">Registration form</h2>
                 <form class="c_form" @submit.prevent="onSubmit">
                     <label class="input_group" :class="{error_field: $v.email.$error}">
                         <span>Email</span>
@@ -50,7 +50,7 @@
                     </label>
 
 
-                    <button type="submit" class="c_btn btn_dark">Register                    </button>
+                    <button type="submit" class="c_btn btn_dark">Register</button>
                 </form>
 
             </div>
@@ -174,11 +174,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        padding-top: 50px;
     }
 
     .cnt_login_form {
-        max-width: 420px;
+        max-width: 460px;
         width: 100%;
+        /*padding-left: 15px;*/
+        /*padding-right: 15px;*/
 
+        .c_subtitle {
+            margin-bottom: 30px;
+        }
     }
 </style>

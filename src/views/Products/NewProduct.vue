@@ -258,7 +258,7 @@
                 this.$v.$touch()
                 if (this.$v.$invalid && !this.image) {
                     this.submitStatus = 'ERROR'
-                    console.log( this.$store.getters.user.email);
+                    // console.log( this.$store.getters.user.email);
                 }
                 else {
                     // do your submit logic here

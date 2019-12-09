@@ -44,18 +44,7 @@ export default {
                 return obj.id !== id
             })
 
-
-            console.log("PRDS---", prds);
-            // console.log(state.products, payload);
-            /* state.products.filter(function(ele){
-                 console.log(ele.id !== payload);
-             });*/
             state.products = prds;
-
-            /* return state.products.filter(a => {
-                 return a.id === payload
-                // console.log(a.id)
-             })*/
         }
     },
     actions: {
@@ -66,10 +55,8 @@ export default {
             const result = []
             try {
                 const productsVal = await fb.database().ref('products').once('value')
-                console.log(productsVal.val());
                 const products = productsVal.val()
 
-                // console.log(products);
                 Object.keys(products).forEach(key => {
                     const product = products[key]
                     result.push(
@@ -168,9 +155,6 @@ export default {
             commit('clearError')
             commit('setLoading', true)
             try {
-                // await fb.database().ref('products').child(id).remove()
-                // var prdRef = fb.database().ref('products').child(id);
-                // const productsVal = await fb.database().ref('products').on('value')
 
                 await fb.database().ref('products').child(id).set(null)
                 commit('deleteProduct', id);

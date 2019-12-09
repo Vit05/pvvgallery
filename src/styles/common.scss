@@ -3,8 +3,6 @@
 @import "styles/var";
 
 
-
-
 html, body {
   font-family: 'Jura', sans-serif !important;
   font-size: $base_fs;
@@ -15,24 +13,31 @@ html, body {
   }
 }
 
-button{
+button {
   font-family: 'Jura', sans-serif !important;
 
 }
-img{
+
+img {
   max-width: 100%;
 }
+
 .wrapper {
   padding-top: 35px;
   display: flex;
   flex-direction: column;
   min-height: 100%;
   //background-color: #afa;
-  .c_content{
+  @media screen and (max-width: 767px) {
+    padding-top: 60px;
+  }
+
+  .c_content {
     flex: 1 0 auto;
 
   }
-  .c_footer{
+
+  .c_footer {
     flex: 0 0 auto;
     padding: 10px 0;
     color: #ffffff;
@@ -85,6 +90,7 @@ img{
   .input_group {
     display: block;
     margin-bottom: 10px;
+
     &.icon_group {
       padding-left: 50px;
 
@@ -108,6 +114,7 @@ img{
         margin-bottom: 5px;
       }
     }
+
     input {
       font-family: 'Jura', sans-serif !important;
       font-size: $base_fs + 2px;
@@ -138,6 +145,7 @@ img{
         border-color: red;
       }
     }
+
     span {
       display: block;
 
@@ -145,6 +153,7 @@ img{
         margin-bottom: 5px;
       }
     }
+
     textarea {
       width: 100%;
       display: block;
@@ -180,23 +189,38 @@ img{
   font-weight: $fontMedium;
   outline: 0;
   cursor: pointer;
+
   &:hover {
     background-color: transparent;
     color: $color_1;
   }
 
-  
-  
-  &.btn_dark{
+
+  &.btn_dark {
     background-color: $color_4;
     color: $color_light;
     border-color: $color_4;
+
     &:hover {
       background-color: transparent;
       color: $color_4;
     }
   }
+  &.btn_delete{
+    background-color: #ce4844;
+    border-color: #ce4844;
+    &:hover {
+      background-color: transparent;
+      color: #ce4844;
+    }
+
+
+
+  }
 }
+
+
+
 
 
 @keyframes fadein {

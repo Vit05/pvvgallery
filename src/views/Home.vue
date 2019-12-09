@@ -1,17 +1,6 @@
 <template>
     <div class="cnt_full">
         <template v-if="!loading">
-            <!-- <v-container class="lighten-10" fluid>
-                 <v-row>
-                     <v-carousel :show-arrows="true">
-                         <v-carousel-item
-                                 v-for="(item,i) in productsPromo"
-                                 :key="i"
-                                 :src="item.imageSrc"
-                         ></v-carousel-item>
-                     </v-carousel>
-                 </v-row>
-             </v-container>-->
             <div class="c_list">
 
                 <ImageItem
@@ -124,6 +113,9 @@
             @media screen and (max-width: 1024px) {
                 width: 50%;
             }
+            @media screen and (max-width: 480px) {
+                height: 220px;
+            }
 
             &:hover {
                 .c_product_desc {
@@ -140,6 +132,9 @@
                 object-fit: cover;
                 height: 40vh;
                 width: 100%;
+                @media screen and (max-width: 480px) {
+                    height: 220px;
+                }
             }
 
 .c_creator{
@@ -165,10 +160,19 @@
                 visibility: hidden;
                 opacity: 0;
                 transition: all ease-in-out .5s;
-
+                @media screen and (max-width: 767px) {
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    align-items: center;
+                }
                 .c_btn {
                     width: 30%;
                     margin: 0 20px;
+                    color: #343838;
+                    @media screen and (max-width: 767px) {
+                        width: 100%;
+                        margin-top: 20px;
+                    }
                 }
             }
         }

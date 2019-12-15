@@ -34,7 +34,7 @@ export default {
         async fetchOrders ({commit}) {
             commit('setLoading', true)
             commit('clearError')
-            const resultOrders = []
+            let resultOrders = []
             try {
                 const fbVal = await fb.database().ref(`/users/${fb.auth().currentUser.uid}/orders`).once('value')
                 const orders = fbVal.val()
@@ -42,6 +42,10 @@ export default {
                     const order = orders[key]
                     resultOrders.push(new Order(order.name, order.phone, order.email, order.productId, order.done, key))
                 })
+                resultOrders = [...resultOrders.filter(order => !order.done), ...resultOrders.filter(order => order.done)]
+
+
+
                 commit('loadOrders', resultOrders)
                 commit('setLoading', false)
             } catch (error) {
@@ -62,15 +66,8 @@ export default {
         }
     },
     getters: {
-        doneOrders (state) {
-            return state.orders.filter(order => order.done)
-        },
-        undoneOrders (state) {
-            return state.orders.filter(order => !order.done)
-        },
-        orders (state, getters) {
-            // console.log(getters.undoneOrders.concat(getters.doneOrders));
-            return getters.undoneOrders.concat(getters.doneOrders)
+        orders (state) {
+            return state.orders
         }
     }
 }

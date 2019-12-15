@@ -5,7 +5,7 @@
             <div class="cnt_full c_header">
                 <div class="cnt">
 
-                    <router-link to="/" class="c_logotype">PVVGALLERY22</router-link>
+                    <router-link to="/" class="c_logotype">PVVGALLERY</router-link>
                     <button class="nav_btn" v-if="isMobile" @click="openMenu">
                         <fai icon="bars" class="icon" size="3x"/>
 

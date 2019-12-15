@@ -68,31 +68,31 @@
         components: {
             ImageItem
         },
-       /* beforeCreate: function(){
-            console.log('beforeCreate()');
+        /* beforeCreate: function(){
+             console.log('beforeCreate()');
 
-            },
-        created: function(){
-            console.log('created()');
-        },
-        beforeMount: function(){
-            console.log('beforeMount()');
-        },
-        mounted: function(){
-            console.log('mounted()');
-        },
-        beforeUpdate: function(){
-            console.log('beforeUpdate()');
-        },
-        updated: function(){
-            console.log('updated()');
-        },
-        beforeDestroy: function(){
-            console.log('beforeDestroy()');
-        },
-        destroyed: function(){
-            console.log('destroyed()');
-        }*/
+             },
+         created: function(){
+             console.log('created()');
+         },
+         beforeMount: function(){
+             console.log('beforeMount()');
+         },
+         mounted: function(){
+             console.log('mounted()');
+         },
+         beforeUpdate: function(){
+             console.log('beforeUpdate()');
+         },
+         updated: function(){
+             console.log('updated()');
+         },
+         beforeDestroy: function(){
+             console.log('beforeDestroy()');
+         },
+         destroyed: function(){
+             console.log('destroyed()');
+         }*/
     };
 </script>
 
@@ -137,14 +137,15 @@
                 }
             }
 
-.c_creator{
-    position: absolute;
-    color: #fff;
-    left: 10px;
-    top: 10px;
-    z-index: 10;
-    font-size: 12px;
-}
+            .c_creator {
+                position: absolute;
+                color: #fff;
+                left: 10px;
+                top: 10px;
+                z-index: 10;
+                font-size: 12px;
+            }
+
             .c_product_desc {
                 padding: 30px;
                 display: flex;
@@ -165,10 +166,15 @@
                     justify-content: flex-end;
                     align-items: center;
                 }
+
                 .c_btn {
                     width: 30%;
                     margin: 0 20px;
                     color: #343838;
+                    letter-spacing: 1px;
+                    &:hover{
+                        color: #00dffc;
+                    }
                     @media screen and (max-width: 767px) {
                         width: 100%;
                         margin-top: 20px;

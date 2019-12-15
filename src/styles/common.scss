@@ -186,8 +186,8 @@ img {
   background-color: $color_1;
   border: 2px solid $color_1;
   transition: all ease-in-out .5s;
-  font-weight: $fontMedium;
   outline: 0;
+  font-weight: 700;
   cursor: pointer;
 
   &:hover {

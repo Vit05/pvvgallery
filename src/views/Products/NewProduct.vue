@@ -1,10 +1,9 @@
 <template>
+    <div class="cnt_full">
+        <div class="cnt">
 
-    <div class="cnt">
 
-        <div class="">
-
-            <h1 class="c_title">Create new product</h1>
+            <h1 class="c_subtitle">Create new product</h1>
 
 
             <form @submit.prevent="createProduct" class="c_form">
@@ -25,19 +24,19 @@
                         </span>
 
                 </label>
-               <!-- <label class="input_group">
-                    <span>Product Vendor</span>
+                <!-- <label class="input_group">
+                     <span>Product Vendor</span>
 
-                    <input name="vendor"
-                           type="text"
-                           v-model="vendor">
-                </label>-->
+                     <input name="vendor"
+                            type="text"
+                            v-model="vendor">
+                 </label>-->
                 <label class="input_group">
-                    <span>Product Color</span>
+                    <span>Product dimension</span>
 
-                    <input name="color"
+                    <input name="dimension"
                            type="text"
-                           v-model="color">
+                           v-model="dimension">
                 </label>
                 <label class="input_group">
                     <span>Product Material</span>
@@ -91,11 +90,6 @@
                     />
                 </div>
 
-                <!-- <v-switch
-                         color="primary"
-                         v-model="promo"
-                         label="Add to Promo?"
-                 ></v-switch>-->
                 <button class="c_btn btn_dark">
                     Create product
                     <p-spinner
@@ -103,94 +97,6 @@
                             line-fg-color="#00dffc"/>
                 </button>
             </form>
-            <!-- <v-form ref="form"
-                     v-model="valid">
-                 <v-text-field
-                         label="TitleProduct "
-                         name="title"
-                         type="text"
-                         required
-                         :rules="[v=>!!v||'Field is required']"
-                         v-model="title"
-                 ></v-text-field>
-                 <v-text-field
-                         label="Vendor Product"
-                         name="vendor"
-                         type="text"
-                         v-model="vendor"
-                 ></v-text-field>
-                 <v-text-field
-                         label="Color Product"
-                         name="color"
-                         type="text"
-                         v-model="color"
-                 ></v-text-field>
-                 <v-text-field
-                         label="Material Product"
-                         name="material"
-                         type="text"
-                         v-model="material"
-                 ></v-text-field>
-                 <v-text-field
-                         label="Price Product"
-                         name="price"
-                         type="text"
-                         required
-                         :rules="[v=>!!v||'Field is required']"
-                         v-model="price"
-                 ></v-text-field>
-
-                 <v-text-field
-                         label="Description Product"
-                         name="description"
-                         type="text"
-
-                         v-model="description"
-                 ></v-text-field>
-               &lt;!&ndash;  <v-textarea
-                         label="Description Product"
-                         name="description"
-                         v-model="description"
-                         :value="description"
-                 ></v-textarea>&ndash;&gt;
-                 <input
-                         style="display: none"
-                         accept="image/*"
-                         type="file"
-                         name="file"
-                         ref="fileInput"
-                         @change="onFileChange"
-                 />
-                 <v-btn class="warning" @click="upload">Upload
-                     <v-icon>{{icons.upload}}</v-icon>
-                 </v-btn>
-
-
-                 <div align="center" justify="center">
-                     <v-img
-                             v-if="imageSrc"
-                             :src="imageSrc"
-                             lazy-src="https://picsum.photos/id/11/10/6"
-                             aspect-ratio="1"
-                             class="grey lighten-2"
-                             max-width="350"
-                             max-height="200"
-                     ></v-img>
-                 </div>
-
-                 <v-switch
-                         color="primary"
-                         v-model="promo"
-                         label="Add to Promo?"
-                 ></v-switch>
-
-                 <v-btn class="success"
-                        :loading="loading"
-                        :disabled="!valid || !image || loading"
-                        @click="createProduct"
-                 >Create product
-                 </v-btn>
-             </v-form>-->
         </div>
 
 
@@ -198,14 +104,14 @@
 </template>
 
 <script>
-    import { required, maxLength } from "vuelidate/lib/validators";
+    import {required, maxLength} from "vuelidate/lib/validators";
     import Spinner from 'vue-simple-spinner'
 
     export default {
         data: () => ({
             title: '',
             // vendor: '',
-            color: '',
+            dimension: '',
             material: '',
             price: '',
             description: '',
@@ -230,43 +136,23 @@
                 return this.$store.getters.loading
             }
         },
-        components:{
-            'p-spinner':Spinner
+        components: {
+            'p-spinner': Spinner
 
         },
         methods: {
             createProduct() {
-                /*if (this.$validate() && this.image && this.price) {
-                    const product = {
-                        title: this.title,
-                        vendor: this.vendor,
-                        color: this.color,
-                        material: this.material,
-                        price: this.price,
-                        description: this.description,
-                        promo: this.promo,
-                        image: this.image
-                    }
-                    // console.log("PRD", prd);
-                    this.$store.dispatch('createProduct', product)
-                        .then(() => {
-                            this.$router.push('/list')
-                        })
-                        .catch(() => {
-                        })
-                }*/
                 this.$v.$touch()
                 if (this.$v.$invalid && !this.image) {
                     this.submitStatus = 'ERROR'
                     // console.log( this.$store.getters.user.email);
-                }
-                else {
+                } else {
                     // do your submit logic here
                     this.submitStatus = 'PENDING'
                     const product = {
                         title: this.title,
                         // vendor: this.vendor,
-                        color: this.color,
+                        dimension: this.dimension,
                         material: this.material,
                         price: this.price,
                         description: this.description,
@@ -300,8 +186,15 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     img {
         max-width: 400px;
+    }
+
+    .c_form{
+        margin-bottom: 30px;
+        .c_btn{
+            margin-bottom: 20px;
+        }
     }
 </style>

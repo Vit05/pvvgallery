@@ -6,7 +6,7 @@ import EditDialogComponent from './components/EditProduct.vue'
 import router from './router/router'
 import store from './store/store'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSpinner, faAlignLeft, faSignInAlt, faSignOutAlt, faUser, faBars } from '@fortawesome/free-solid-svg-icons'
+import { faSpinner, faAlignLeft, faSignInAlt, faSignOutAlt, faUser, faBars, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import Drawer from './components/Drawer';
 import vmodal from 'vue-js-modal'
 import Spinner from './components/Spinner.vue'
@@ -18,8 +18,8 @@ import * as fb from 'firebase/app'
 import "firebase/auth";
 import "firebase/firestore";
 
-library.add(faSpinner, faAlignLeft, faSignInAlt, faSignOutAlt, faUser, faBars)
-Vue.use(vmodal, { dialog: true, dynamic: true })
+library.add(faSpinner, faAlignLeft, faSignInAlt, faSignOutAlt, faUser, faBars, faExternalLinkAlt)
+Vue.use(vmodal, {  dialog: true, dynamic: true })
 Vue.use(Vuelidate)
 
 Vue.directive("lazyload", LazyLoadDirective);

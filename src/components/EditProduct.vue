@@ -45,10 +45,13 @@
 
     <div>
         <modal name="edit-product-modal"
+               width="95%"
                height="auto"
+               :maxWidth="360"
+               :adaptive="true"
                :clickToClose="false">
             <div class="c_modal_box">
-                <h1>Edit <strong>{{this.product.title}}</strong></h1>
+                <p class="c_subtitle">Edit <strong>{{this.product.title}}</strong></p>
                 <form @submit.prevent="onSave" class="c_form">
                     <label class="input_group"
                            :class="{error_field: $v.editTitle.$error}">
@@ -79,18 +82,15 @@
                     </label>
 
 
-                    <button class="c_btn btn_dark"
-                            type="button"
-                            @click="onCancel">CLOSE
-                    </button>
-                    <button class="c_btn btn_dark"
-                            type="submit">SAVE
-                    </button>
-
-                    <!--  <p class="typo__p" v-if="submitStatus === 'OK'">Thanks for your submission!</p>
-                      <p class="typo__p" v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
-                      <p class="typo__p" v-if="submitStatus === 'PENDING'">Sending...</p>-->
-
+                    <div class="c_row">
+                        <button class="c_btn btn_dark"
+                                type="button"
+                                @click="onCancel">CLOSE
+                        </button>
+                        <button class="c_btn btn_dark"
+                                type="submit">SAVE
+                        </button>
+                    </div>
                 </form>
             </div>
 
@@ -137,8 +137,7 @@
                 this.$v.$touch()
                 if (this.$v.$invalid) {
                     this.submitStatus = 'ERROR'
-                }
-                else {
+                } else {
                     // do your submit logic here
                     this.submitStatus = 'PENDING'
                     this.$store.dispatch('updateProduct', {

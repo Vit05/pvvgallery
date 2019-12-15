@@ -8,20 +8,15 @@
                         v-if="product.imageSrc"
                         :source="product.imageSrc"
                 />
-
             </div>
             <div class="c_description">
                 <p class="c_desc_item">
                     <span class="c_key">Name:</span>
                     <span class="c_value">{{ product.title }}</span>
                 </p>
-                <!-- <p class="c_desc_item">
-                     <span class="c_key">Vendor:</span>
-                     <span class="c_value">{{ product.vendor }}</span>
-                 </p>-->
                 <p class="c_desc_item">
-                    <span class="c_key">Color:</span>
-                    <span class="c_value">{{ product.color }}</span>
+                    <span class="c_key">Dimension:</span>
+                    <span class="c_value">{{ product.dimension }}</span>
                 </p>
                 <p class="c_desc_item">
                     <span class="c_key">Material:</span>
@@ -116,30 +111,6 @@
         components: {
             ImageItem,
         },
-        /* beforeCreate: function(){
-             console.log('beforeCreate()');
-         },
-         created: function(){
-             console.log('created()');
-         },
-         beforeMount: function(){
-             console.log('beforeMount()');
-         },
-         mounted: function(){
-             console.log('mounted()');
-         },
-         beforeUpdate: function(){
-             console.log('beforeUpdate()');
-         },
-         updated: function(){
-             console.log('updated()');
-         },
-         beforeDestroy: function(){
-             console.log('beforeDestroy()');
-         },
-         destroyed: function(){
-             console.log('destroyed()');
-         }*/
     }
 </script>
 
@@ -149,7 +120,7 @@
         padding-top: 50px;
         padding-bottom: 50px;
         @media screen and (max-width: 767px) {
-            padding: 0 0 30px;
+            padding: 0 0 30px !important;
             flex-direction: column;
         }
 

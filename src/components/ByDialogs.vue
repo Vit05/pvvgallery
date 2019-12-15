@@ -54,11 +54,14 @@
         </v-row>-->
     <div>
         <modal name="product-modal"
+               width="95%"
                height="auto"
+               :maxWidth="360"
+               :adaptive="true"
                :clickToClose="false"
                class="qqq">
             <div class="c_modal_box">
-                <h1>Buy {{this.product.title}}</h1>
+                <p class="c_subtitle">Buying painting</p>
                 <form @submit.prevent="onSave" class="c_form">
                     <label class="input_group"
                            :class="{error_field: $v.name.$error}">
@@ -105,13 +108,15 @@
                     </label>
 
 
-                    <button class="c_btn btn_dark"
-                            type="button"
-                            @click="onClose">Close
-                    </button>
-                    <button class="c_btn btn_dark"
-                            type="submit">BUY IT
-                    </button>
+                    <div class="c_row">
+                        <button class="c_btn btn_dark"
+                                type="button"
+                                @click="onClose">Close
+                        </button>
+                        <button class="c_btn btn_dark"
+                                type="submit">BUY IT
+                        </button>
+                    </div>
 
                   <!--  <p class="typo__p" v-if="submitStatus === 'OK'">Thanks for your submission!</p>
                     <p class="typo__p" v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
@@ -200,5 +205,14 @@
 
     .v--modal-box {
         padding: 50px 30px;
+        /*margin-left: 20px;*/
+        /*margin-right: 20px;*/
+        /*max-width: 100%;*/
+
+        .c_row{
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
     }
 </style>

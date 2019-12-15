@@ -3,9 +3,9 @@ import "firebase/database";
 import "firebase/storage";
 
 class Product {
-    constructor(title, color, material, price, description, ownerId, imageSrc = '', promo = false, productCreator = null, id = null) {
+    constructor(title, dimension, material, price, description, ownerId, imageSrc = '', promo = false, productCreator = null, id = null) {
         this.title = title
-        this.color = color
+        this.dimension = dimension
         this.material = material
         this.price = price
         this.description = description
@@ -62,7 +62,7 @@ export default {
                     result.push(
                         new Product(
                             product.title,
-                            product.color,
+                            product.dimension,
                             product.material,
                             product.price,
                             product.description,
@@ -93,7 +93,7 @@ export default {
             try {
                 const newProduct = new Product(
                     payload.title,
-                    payload.color,
+                    payload.dimension,
                     payload.material,
                     payload.price,
                     payload.description,
